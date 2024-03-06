@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using Welcome.ViewModel;
 
 namespace Welcome.View
 {
-    internal class UserView
+    public class UserView
     {
         public UserViewModel _viewModel { get; set; }
 
@@ -35,6 +36,11 @@ namespace Welcome.View
         {
             Console.WriteLine("User: " + _viewModel._user.Name);
             Console.WriteLine("Password: " + _viewModel._user.Password);
+        }
+
+        public void DisplayError()
+        {
+            throw new Exception("Display Error Метод");
         }
 
     }

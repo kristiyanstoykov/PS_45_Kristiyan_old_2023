@@ -8,7 +8,7 @@ using BCrypt.Net;
 
 namespace Welcome.Model
 {
-    internal class User
+    public class User
     {
         public string Name { get; set; }
 
@@ -21,6 +21,8 @@ namespace Welcome.Model
         public string Email { get; set; }
         public string FacultyNumber { get; set; }
         public UserRolesEnum Role { get; set; }
+
+        public User() { }
 
         public User(string name, string pass, string email, string facNum, UserRolesEnum role)
         {
