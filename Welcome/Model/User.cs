@@ -10,6 +10,8 @@ namespace Welcome.Model
 {
     public class User
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         private string _hashedPassword = string.Empty;

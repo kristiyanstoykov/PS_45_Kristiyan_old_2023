@@ -11,9 +11,11 @@ namespace WelcomeExtended.Others
     internal class Delegates
     {
         public static readonly ILogger logger = LoggerHelper.GetLogger("Hello");
-        public static readonly ILogger fileLogger = LoggerHelper.GetFileLogger("application.log");
+        public static readonly ILogger fileLogger = LoggerHelper.GetFileLogger("error.log");
+        public static readonly ILogger userLoginFileLogger = LoggerHelper.GetFileLogger("user.log");
 
         public delegate void ActionOnError(string errorMessage);
+        public delegate void ActionOnSuccess(string successMessage);
 
         public static void Log(string error)
         {
@@ -32,6 +34,15 @@ namespace WelcomeExtended.Others
             fileLogger.LogError(error);
         }
 
+        public static void UserLogError(string error)
+        {
+            userLoginFileLogger.LogError(error);
+        }
+
+        public static void UserLogSuccess(string message)
+        {
+            userLoginFileLogger.LogInformation(message);
+        }
 
     }
 }

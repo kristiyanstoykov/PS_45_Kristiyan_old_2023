@@ -12,6 +12,12 @@ namespace Welcome.ViewModel
     {
         public User _user { get; set; }
 
+        public int Id
+        {
+            get { return _user.Id; }
+            set { _user.Id = value; }
+        }
+
         public string Name
         {
             get { return _user.Name; }

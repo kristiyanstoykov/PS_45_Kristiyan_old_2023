@@ -14,8 +14,6 @@ namespace WelcomeExtended.Loggers
 
         public FileLogger(string fileName)
         {
-            // Assuming the application runs in the bin/Debug or bin/Release folder,
-            // move two levels up to get to the project root.
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string projectRoot = Path.GetFullPath(Path.Combine(baseDir, @"..\..\.."));
             string logDir = Path.Combine(projectRoot, "logs");

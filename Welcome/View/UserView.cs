@@ -19,6 +19,7 @@ namespace Welcome.View
 
         public void DisplayUser()
         {
+            Console.WriteLine("User id: " + _viewModel._user.Id);
             Console.WriteLine("User: " + _viewModel._user.Name);
             Console.WriteLine("Role: " + _viewModel._user.Role);
             Console.WriteLine("Email: " + _viewModel._user.Email);
