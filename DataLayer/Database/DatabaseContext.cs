@@ -36,33 +36,16 @@ namespace DataLayer.Database
             var user = new DatabaseUser
             {
                 Id = 1,
-                Name = "John Doe",
-                Password = "1234",
-                Email = "john_doe@email.com",
+                Name = "admin",
+                Password = "admin",
+                Email = "admin@email.com",
                 FacultyNumber = "",
                 Role = UserRolesEnum.ADMIN,
                 Expires = DateTime.Now.AddYears(10)
             };
 
-            //Console.WriteLine("Right after John Doe is created before seeding");
-            //Console.WriteLine(user.Password);
-
-            var user2 = new DatabaseUser
-            {
-                Id = 2,
-                Name = "user1",
-                Password = "pass1",
-                Email = "user1@email.com",
-                FacultyNumber = "121221010",
-                Role = UserRolesEnum.STUDENT,
-                Expires = System.DateTime.Now.AddYears(10)
-            };
-            //Console.WriteLine("Right after user1 is created before seeding");
-            //Console.WriteLine(user2.Password);
-
 
             modelBuilder.Entity<DatabaseUser>().HasData(user);
-            modelBuilder.Entity<DatabaseUser>().HasData(user2);
 
         }
 
