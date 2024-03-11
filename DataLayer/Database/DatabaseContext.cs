@@ -12,18 +12,20 @@ namespace DataLayer.Database
     public class DatabaseContext : DbContext
     {
         public DbSet<DatabaseUser> Users { get; set; }
+        public DbSet<DatabaseLogger> DatabaseLogger { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string databaseFile = "Welcome.db";
-            string projectRoot = Path.GetFullPath(Path.Combine(baseDir, @"..\..\.."));
+            string projectRoot = Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\.."));
             string databaseDir = Path.Combine(projectRoot, "db");
 
             if (!Directory.Exists(databaseDir))
             {
                 Directory.CreateDirectory(databaseDir);
             }
+
             string databasePath = databaseDir + $"\\{databaseFile}";
 
             optionsBuilder.UseSqlite($"Data Source={databasePath}");
@@ -44,8 +46,17 @@ namespace DataLayer.Database
                 Expires = DateTime.Now.AddYears(10)
             };
 
+            var logger = new DatabaseLogger
+            {
+                Id = 1,
+                TimeStamp = DateTime.Now,
+                Level = "INFO",
+                Message = "Database initialized"
+            };
+
 
             modelBuilder.Entity<DatabaseUser>().HasData(user);
+            modelBuilder.Entity<DatabaseLogger>().HasData(logger);
 
         }
 
