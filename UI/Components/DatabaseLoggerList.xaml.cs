@@ -32,36 +32,28 @@ namespace UI.Components
 
         private void Logger_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // Get the original source of the click
             var source = e.OriginalSource as DependencyObject;
 
-            // Traverse up the visual tree to find the DataGridCell that was clicked
             while (source != null && !(source is DataGridCell))
             {
                 source = VisualTreeHelper.GetParent(source);
             }
 
-            // Proceed only if a DataGridCell was found
             if (source is DataGridCell cell)
             {
-                // Check if the cell belongs to the "TimeStamp" column
                 if (cell.Column.Header.ToString() == "TimeStamp")
                 {
-                    // Now find the DataGridRow that contains this cell
                     var row = source as DependencyObject;
                     while (row != null && !(row is DataGridRow))
                     {
                         row = VisualTreeHelper.GetParent(row);
                     }
 
-                    // If a row was found, proceed to display the MessageBox
                     if (row is DataGridRow dataGridRow)
                     {
-                        // Assuming your log item class has properties named 'Message' and 'Level'
-                        var logItem = dataGridRow.Item as DatabaseLogger; // Assuming DatabaseLogger is your model
+                        var logItem = dataGridRow.Item as DatabaseLogger;
                         if (logItem != null)
                         {
-                            // Format and show the message box
                             string message = $"Time: {logItem.TimeStamp}\nLevel: {logItem.Level}\nMessage: {logItem.Message}";
                             MessageBox.Show(message, "Log Details", MessageBoxButton.OK, MessageBoxImage.Information);
                         }

@@ -21,8 +21,8 @@
                 <DataGridTextColumn Header="Email" IsReadOnly="True" Binding="{Binding Email}" />
                 <DataGridTextColumn Header="Faculty number" IsReadOnly="True" Binding="{Binding FacultyNumber}" />
                 <DataGridTextColumn Header="Expires at" IsReadOnly="True" Binding="{Binding Expires}" />
+                <DataGridTextColumn Header="Subjects" IsReadOnly="True" Binding="{Binding SubjectsList}" />
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </UserControl>

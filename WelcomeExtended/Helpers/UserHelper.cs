@@ -16,25 +16,5 @@ namespace WelcomeExtended.Helpers
             return $"{user.Id}. Name: {user.Name}, Email: {user.Email}, Faculty Number: {user.FacultyNumber}, Role: {user.Role}";
         }
 
-        public static bool ValidateCredentials(this UserData userData, string name, string password)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("The name cannot be empty");
-            }
-
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException("The password cannot be empty");
-            }
-
-            return userData.ValidateUser(name, password);
-        }
-
-        public static User? GetUser(this UserData userData, string name, string password)
-        {
-            return userData.GetUser(name, password);
-        }
-
     }
 }

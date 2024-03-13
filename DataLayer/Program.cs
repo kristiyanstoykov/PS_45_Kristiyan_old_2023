@@ -20,8 +20,6 @@ namespace DataLayer
             }
 
             Menu.ShowMenu();
-
-
         }
     }
 }

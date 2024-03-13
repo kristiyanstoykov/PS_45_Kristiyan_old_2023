@@ -62,9 +62,6 @@ namespace Welcome.Model
 
         private bool IsHashed(string value)
         {
-            // BCrypt hash string pattern starts with $2a$, $2b$, or $2y$ followed by 02-31 rounds parameter
-            // and 53 characters of the base-64 encoded hash (radix-64 using the bcrypt alphabet)
-            // Example: $2a$10$...
             return value != null && System.Text.RegularExpressions.Regex.IsMatch(value, @"^\$2[aby]\$\d{2}\$[./A-Za-z0-9]{53}$");
         }
     }

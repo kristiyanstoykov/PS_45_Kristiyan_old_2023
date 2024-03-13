@@ -1,4 +1,5 @@
 ﻿using DataLayer.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace UI.Components
             InitializeComponent();
 
             using var context = new DatabaseContext();
-            var records = context.Users.ToList();
+            var records = context.Users.Include(u => u.DatabaseSubjects).ToList();
             Students.DataContext = records;
         }
     }

@@ -95,7 +95,7 @@ namespace WelcomeExtended
             Console.Write("Write password: ");
             String password = Console.ReadLine();
 
-            bool userExists = UserHelper.ValidateCredentials(userData, name, password);
+            bool userExists = userData.ValidateUser(name, password);
             var logError = new ActionOnError(UserLogError);
             var logSuccess = new ActionOnSuccess(UserLogSuccess);
 

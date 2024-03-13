@@ -1,4 +1,5 @@
 ﻿using DataLayer.Database;
+using DataLayer.Helpers;
 using DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,8 +22,11 @@ namespace DataLayer.Layout
                 Console.WriteLine("1. Add user");
                 Console.WriteLine("2. Delete user");
                 Console.WriteLine("3. Show all users");
-                Console.WriteLine("4. Validate user");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("4. Show all subjects");
+                Console.WriteLine("5. Validate user");
+                Console.WriteLine("6. Add subject");
+                Console.WriteLine("7. Add subject to student user");
+                Console.WriteLine("8. Exit");
 
                 Console.Write("Enter your choice: ");
                 int choice = int.Parse(Console.ReadLine());
@@ -49,13 +53,27 @@ namespace DataLayer.Layout
                         Console.WriteLine("All users: ");
                         foreach (var user in users)
                         {
-                            Console.WriteLine(" " + UserHelper.ToString(user));
+                            Console.WriteLine(" " + DatabaseUserHelper.ToString(user));
                         }
                         break;
                     case 4:
-                        ValidateUser();
+                        List<DatabaseSubject> subjects = GetAllSubjects();
+                        Console.WriteLine("All subjects: ");
+                        foreach (var subject in subjects)
+                        {
+                            Console.WriteLine(" " + SubjectHelper.ToString(subject));
+                        }
                         break;
                     case 5:
+                        ValidateUser();
+                        break;
+                    case 6:
+                        AddSubject();
+                        break;
+                    case 7:
+                        UserAddSubject();
+                        break;
+                    case 8:
                         Console.WriteLine("Goodbye!");
                         return;
                     default:
@@ -66,7 +84,126 @@ namespace DataLayer.Layout
             }
         }
 
-        public static List<DatabaseUser> GetAllUsers()
+        private static void AddSubject()
+        {
+            Console.Write("Enter subject name: ");
+            string sbName = Console.ReadLine();
+
+            while (string.IsNullOrEmpty(sbName))
+            {
+                Console.Write("Subject name cannot be empty. Please enter a valid name: ");
+                sbName = Console.ReadLine();
+            }
+
+            using (var context = new DatabaseContext())
+            {
+                if (context.Subjects.Any(s => s.Name == sbName))
+                {
+                    Console.WriteLine("Subject with this name already exists.");
+                    context.Add<DatabaseLogger>(new DatabaseLogger
+                    {
+                        TimeStamp = DateTime.Now,
+                        Level = "Error",
+                        Message = $"Subject {sbName} already exists"
+                    });
+                    return;
+                }
+
+                context.Add<DatabaseSubject>(new DatabaseSubject
+                {
+                    Name = sbName
+                });
+
+                context.Add<DatabaseLogger>(new DatabaseLogger
+                {
+                    TimeStamp = DateTime.Now,
+                    Level = "INFO",
+                    Message = $"Added subject {sbName}"
+                });
+                context.SaveChanges();
+            }
+        }
+
+        private static void UserAddSubject()
+        {
+            List<DatabaseUser> users = GetAllUsers();
+            List<DatabaseUser> students = users.Where(u => u.Role == UserRolesEnum.STUDENT).ToList();
+            if (students == null)
+            {
+                Console.WriteLine("No students in the database!");
+                return;
+            }
+
+            List<DatabaseSubject> subjects = GetAllSubjects();
+            foreach (var student in students)
+            {
+                Console.WriteLine(DatabaseUserHelper.ToString(student));
+            }
+
+            Console.Write("Choose id of student: ");
+            int studentId = int.Parse(Console.ReadLine());
+            var selectedStudent = students.FirstOrDefault(student => student.Id == studentId);
+            while (selectedStudent == null)
+            {
+                Console.Write("Invalid student id. Please enter a valid id of student: ");
+                studentId = int.Parse(Console.ReadLine());
+                selectedStudent = students.FirstOrDefault(student => student.Id == studentId);
+            }
+
+            Console.WriteLine("All subjects");
+            foreach (var subject in subjects)
+            {
+                Console.WriteLine(" " + SubjectHelper.ToString(subject));
+            }
+
+            Console.Write("Choose subject id to add to student: ");
+            int subjectId = int.Parse(Console.ReadLine());
+            var selectedSubject = subjects.FirstOrDefault(subject => subject.Id == subjectId);
+            while (selectedSubject == null)
+            {
+                Console.Write("Invalid subject id. Please enter a valid id of subject: ");
+                subjectId = int.Parse(Console.ReadLine());
+                selectedSubject = subjects.FirstOrDefault(subject => subject.Id == subjectId);
+            }
+
+            using (var context = new DatabaseContext())
+            {
+                // Check if the relationship already exists to avoid duplicates
+                var existingRelation = context.Set<Dictionary<string, object>>("UserSubject")
+                                              .Any(us => (int)us["DatabaseUserId"] == studentId
+                                                      && (int)us["DatabaseSubjectId"] == subjectId);
+
+                if (!existingRelation)
+                {
+                    context.Set<Dictionary<string, object>>("UserSubject").Add(new Dictionary<string, object>
+                    {
+                        ["DatabaseUserId"] = studentId,
+                        ["DatabaseSubjectId"] = subjectId
+                    });
+
+                    context.SaveChanges();
+                    Console.WriteLine("Subject added to student successfully.");
+                    context.Add<DatabaseLogger>(new DatabaseLogger
+                    {
+                        TimeStamp = DateTime.Now,
+                        Level = "INFO",
+                        Message = $"Added subject {selectedSubject.Name} to student {selectedStudent.Name}"
+                    });
+                }
+                else
+                {
+                    Console.WriteLine("This subject is already associated with the student.");
+                    context.Add<DatabaseLogger>(new DatabaseLogger
+                    {
+                        TimeStamp = DateTime.Now,
+                        Level = "Error",
+                        Message = $"Student {selectedStudent.Name} already has subject {selectedSubject.Name}"
+                    });
+                }
+            }
+        }
+
+        private static List<DatabaseSubject> GetAllSubjects()
         {
             using (var context = new DatabaseContext())
             {
@@ -74,27 +211,37 @@ namespace DataLayer.Layout
                 {
                     TimeStamp = DateTime.Now,
                     Level = "INFO",
-                    Message = "Retrieved all users"
+                    Message = "Retrieved all subjects"
                 });
                 context.SaveChanges();
-                return context.Users.ToList();
+                return context.Subjects.ToList();
+            }
+        }
+
+        public static List<DatabaseUser> GetAllUsers()
+        {
+            using (var context = new DatabaseContext())
+            {
+                // Include the Subjects collection explicitly
+                var users = context.Users
+                    .Include(u => u.DatabaseSubjects) // Eagerly load DatabaseSubjects
+                    .ToList();
+                return users;
             }
         }
 
         public static void ValidateUser()
         {
-            Console.WriteLine("Enter user name: ");
+            Console.Write("Enter user name: ");
             string name = Console.ReadLine();
-            Console.WriteLine("Enter password: ");
+            Console.Write("Enter password: ");
             string password = Console.ReadLine();
 
             using (var context = new DatabaseContext())
             {
-                var users = context.Users.ToList();
-                var user = (from u in users
-                           where u.Name == name
-                           select u)
-                           .FirstOrDefault();
+                var user = (from u in context.Users
+                            where u.Name == name
+                            select u).FirstOrDefault();
 
                 DatabaseLogger dbLogger;
 
@@ -103,34 +250,35 @@ namespace DataLayer.Layout
                     if (user.VerifyPassword(password))
                     {
                         Console.WriteLine("User is valid");
-                        dbLogger = new DatabaseLogger
+                        context.Add<DatabaseLogger>(new DatabaseLogger
                         {
                             TimeStamp = DateTime.Now,
                             Level = "INFO",
-                            Message = $"User {user.Name} is valid"
-                        };
+                            Message = $"User {user.Name} is validated"
+                        });
                     }
                     else
                     {
                         Console.WriteLine("Invalid password");
-                        dbLogger = new DatabaseLogger
+                        context.Add<DatabaseLogger>(new DatabaseLogger
                         {
                             TimeStamp = DateTime.Now,
-                            Level = "ERROR",
-                            Message = $"Invalid password for user {user.Name}"
-                        };
+                            Level = "Error",
+                            Message = $"Invalid password for {user.Name}"
+                        });
                     }
                 }
                 else
                 {
                     Console.WriteLine("User not found");
-                    dbLogger = new DatabaseLogger
+                    context.Add<DatabaseLogger>(new DatabaseLogger
                     {
                         TimeStamp = DateTime.Now,
-                        Level = "ERROR",
+                        Level = "Error",
                         Message = $"User {name} not found"
-                    };
+                    });
                 }
+                context.SaveChanges();
             }
         }
 
@@ -181,7 +329,8 @@ namespace DataLayer.Layout
                 Password = password,
                 Email = email,
                 FacultyNumber = facNum,
-                Role = role
+                Role = role,
+                Expires = DateTime.Now.AddYears(1)
             };
 
             DatabaseLogger dbLogger = new DatabaseLogger
@@ -223,6 +372,12 @@ namespace DataLayer.Layout
                 }
                 else
                 {
+                    context.Add<DatabaseLogger>(new DatabaseLogger
+                    {
+                        TimeStamp = DateTime.Now,
+                        Level = "INFO",
+                        Message = $"Tried to deleted user {name}"
+                    });
                     return false;
                 }
             }
