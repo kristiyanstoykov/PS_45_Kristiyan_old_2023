@@ -12,6 +12,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" IsReadOnly="True" Binding="{Binding Id}" />
                 <DataGridTextColumn Header="TimeStamp" IsReadOnly="True" Binding="{Binding TimeStamp}" />
+                <DataGridTextColumn Header="Level" IsReadOnly="True" Binding="{Binding Level}" />
+                <DataGridTextColumn Header="Message" IsReadOnly="True" Binding="{Binding Message}" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
