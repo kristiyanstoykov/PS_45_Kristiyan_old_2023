@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WelcomeExtended", "WelcomeE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{2E181455-8315-4A7A-B901-22CD1244080C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{6088E008-4EFB-47CE-8514-BB68F36F989E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI\UI.csproj", "{6088E008-4EFB-47CE-8514-BB68F36F989E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyMVVM", "EasyMVVM\EasyMVVM.csproj", "{032D4752-E2D5-49A0-AAE2-157C01BB357F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalMVVM", "MinimalMVVM\MinimalMVVM.csproj", "{A71E07A6-F620-46E1-8C30-D6AE9552136A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{6088E008-4EFB-47CE-8514-BB68F36F989E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6088E008-4EFB-47CE-8514-BB68F36F989E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6088E008-4EFB-47CE-8514-BB68F36F989E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{032D4752-E2D5-49A0-AAE2-157C01BB357F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032D4752-E2D5-49A0-AAE2-157C01BB357F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032D4752-E2D5-49A0-AAE2-157C01BB357F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032D4752-E2D5-49A0-AAE2-157C01BB357F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A71E07A6-F620-46E1-8C30-D6AE9552136A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A71E07A6-F620-46E1-8C30-D6AE9552136A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A71E07A6-F620-46E1-8C30-D6AE9552136A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A71E07A6-F620-46E1-8C30-D6AE9552136A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
