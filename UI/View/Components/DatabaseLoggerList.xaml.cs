@@ -22,12 +22,6 @@ namespace UI.Components
         public DatabaseLoggerList()
         {
             InitializeComponent();
-
-            using (var context = new DatabaseContext())
-            {
-                var records = context.DatabaseLogger.ToList();
-                logger.DataContext = records;
-            }
         }
 
         private void Logger_MouseDoubleClick(object sender, MouseButtonEventArgs e)

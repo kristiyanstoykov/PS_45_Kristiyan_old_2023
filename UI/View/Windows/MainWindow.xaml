@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <local2:StudentsList x:Name="studentsList" Padding="2" Grid.Row="0" />
-        <local2:DatabaseLoggerList x:Name="databaseLoggerList" Padding="2" Grid.Row="1" />
+        <local2:StudentsList x:Name="studentsList"  DataContext="{Binding UsersPresenterVM, Source={StaticResource Locator}}" Padding="2" Grid.Row="0" />
+        <local2:DatabaseLoggerList x:Name="databaseLoggerList" DataContext="{Binding LoggerPresenterVM, Source={StaticResource Locator}}" Padding="2" Grid.Row="1" />
     </Grid>
 </Window>

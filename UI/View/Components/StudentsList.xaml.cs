@@ -1,7 +1,9 @@
 ﻿using DataLayer.Database;
+using DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,18 +16,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UI.ViewModel;
+using Welcome.Model;
 
 namespace UI.Components
 {
     public partial class StudentsList : UserControl
     {
+
         public StudentsList()
         {
             InitializeComponent();
-
-            using var context = new DatabaseContext();
-            var records = context.Users.Include(u => u.DatabaseSubjects).ToList();
-            Students.DataContext = records;
         }
+
     }
 }
