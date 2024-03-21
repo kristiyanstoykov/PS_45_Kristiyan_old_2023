@@ -14,7 +14,9 @@
         <KeyBinding Key="Enter" Command="{Binding ConvertTextCommand}"/>
     </Window.InputBindings>
     <StackPanel Height="500">
-        <ToggleButton x:Name="ToggleConversionType" Content="Toggle Conversion" Margin="5" Checked="ToggleConversionType_Checked" Unchecked="ToggleConversionType_Checked"/>
+        <ToggleButton x:Name="ToggleConversionType" Content="Toggle Conversion"
+                      Margin="5" Checked="ToggleConversionType_Checked"
+                      Unchecked="ToggleConversionType_Checked"/>
         <Label Foreground="Blue" Margin="5,5,5,0">Text To Convert</Label>
         <TextBox Text="{Binding SomeText, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
         <Label Foreground="Blue" Margin="5,5,5,0">History</Label>

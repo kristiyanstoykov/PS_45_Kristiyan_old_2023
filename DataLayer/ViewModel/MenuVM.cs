@@ -111,7 +111,6 @@ namespace DataLayer.ViewModel
                         ["DatabaseSubjectId"] = subjectId
                     });
 
-                    context.SaveChanges();
                     Console.WriteLine("Subject added to student successfully.");
                     context.Add<DatabaseLogger>(new DatabaseLogger
                     {
@@ -119,6 +118,7 @@ namespace DataLayer.ViewModel
                         Level = "INFO",
                         Message = $"Added subject {selectedSubject.Name} to student {selectedStudent.Name}"
                     });
+                    context.SaveChanges();
                 }
                 else
                 {
@@ -129,6 +129,7 @@ namespace DataLayer.ViewModel
                         Level = "Error",
                         Message = $"Student {selectedStudent.Name} already has subject {selectedSubject.Name}"
                     });
+                    context.SaveChanges();
                 }
             }
         }

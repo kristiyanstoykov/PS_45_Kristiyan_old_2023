@@ -8,16 +8,36 @@ using System.Linq;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using UI.View.Components;
+using Welcome.Model;
+using Welcome.Others;
 
 namespace UI.ViewModel
 {
     public class UsersPresenter : ObservableObject
     {
+        public string FullName { get; set; }
+        public string Password { get; set; }
+        public string FacultyNumber { get; set; }
+        public string Email { get; set; }
+        public UserRolesEnum Role { get; set; }
+
 
         public ObservableCollection<DatabaseUser> Users { get; set; } = new ObservableCollection<DatabaseUser>();
 
+        public ICommand AddUserCommand => new DelegateCommand(AddUser);
+
         public UsersPresenter()
         {
+            FullName = "";
+            Password = "";
+            FacultyNumber = "";
+            Email = "";
+            Role = UserRolesEnum.ANONYMOUS;
+
             LoadUsers();
         }
 
@@ -30,5 +50,47 @@ namespace UI.ViewModel
                 Users.Add(user);
             }
         }
+
+        private void AddUser()
+        {
+            DatabaseUser FormUser = new DatabaseUser
+            {
+                Name = FullName,
+                Password = Password,
+                FacultyNumber = FacultyNumber,
+                Email = Email,
+                Role = Role
+            };
+
+            if (Users.Any(u => u.Name.Equals(FormUser.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                MessageBox.Show("A user with the same name already exists.", "Error Adding User", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                try
+                {
+                    using (var context = new DatabaseContext())
+                    {
+                        context.Add(FormUser);
+                        context.SaveChanges();
+                    }
+
+                    Users.Add(FormUser);
+                    MessageBox.Show($"User {FormUser.Name} successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    FullName = "";
+                    Password = "";
+                    FacultyNumber = "";
+                    Email = "";
+                    Role = UserRolesEnum.ANONYMOUS;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
     }
 }
