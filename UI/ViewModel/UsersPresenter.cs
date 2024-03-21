@@ -59,7 +59,8 @@ namespace UI.ViewModel
                 Password = Password,
                 FacultyNumber = FacultyNumber,
                 Email = Email,
-                Role = Role
+                Role = Role,
+                Expires = DateTime.Now.AddYears(1)
             };
 
             if (Users.Any(u => u.Name.Equals(FormUser.Name, StringComparison.OrdinalIgnoreCase)))
