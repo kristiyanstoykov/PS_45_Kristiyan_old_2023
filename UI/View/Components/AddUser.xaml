@@ -37,16 +37,6 @@
             <TextBox x:Name="FacultyNumberBox" Text="{Binding FacultyNumber, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
 
             <Label>Role:</Label>
-            <!--<ComboBox x:Name="RoleBox"
-                SelectedValue="{Binding FormUser.Role, Converter={StaticResource EnumToStringConverter}, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0,0,0,10">
-                <ComboBoxItem Content="ANONYMOUS"/>
-                <ComboBoxItem Content="ADMIN"/>
-                <ComboBoxItem Content="INSPECTOR"/>
-                <ComboBoxItem Content="PROFESSOR"/>
-                <ComboBoxItem Content="STUDENT"/>
-            </ComboBox>-->
-
             <ComboBox x:Name="RoleBox" ItemsSource="{Binding Source={StaticResource UserRolesEnum}}"
                       SelectedValue="{Binding Role, UpdateSourceTrigger=PropertyChanged}"
                       Margin="0,0,0,10" SelectedIndex="0" />
