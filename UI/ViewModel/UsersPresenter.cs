@@ -53,17 +53,7 @@ namespace UI.ViewModel
 
         private void AddUser()
         {
-            DatabaseUser FormUser = new DatabaseUser
-            {
-                Name = FullName,
-                Password = Password,
-                FacultyNumber = FacultyNumber,
-                Email = Email,
-                Role = Role,
-                Expires = DateTime.Now.AddYears(1)
-            };
-
-            if (Users.Any(u => u.Name.Equals(FormUser.Name, StringComparison.OrdinalIgnoreCase)))
+            if (Users.Any(u => u.Name.Equals(FullName, StringComparison.OrdinalIgnoreCase)))
             {
                 MessageBox.Show("A user with the same name already exists.", "Error Adding User", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -71,6 +61,16 @@ namespace UI.ViewModel
             {
                 try
                 {
+                    DatabaseUser FormUser = new DatabaseUser
+                    {
+                        Name = FullName,
+                        Password = Password,
+                        FacultyNumber = FacultyNumber,
+                        Email = Email,
+                        Role = Role,
+                        Expires = DateTime.Now.AddYears(1)
+                    };
+
                     using (var context = new DatabaseContext())
                     {
                         context.Add(FormUser);
