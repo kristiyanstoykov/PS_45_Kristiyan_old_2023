@@ -17,6 +17,9 @@ namespace DataLayer.Model
         public virtual ICollection<DatabaseSubject> DatabaseSubjects { get; set; }
 
         [NotMapped] // Ensures EF Core does not try to map this to your database
-        public string SubjectsList => String.Join(", ", DatabaseSubjects.Select(s => s.Name));
+        public string SubjectsList => DatabaseSubjects != null
+            ? String.Join(", ", DatabaseSubjects.Select(s => s.Name))
+            : string.Empty;
+
     }
 }

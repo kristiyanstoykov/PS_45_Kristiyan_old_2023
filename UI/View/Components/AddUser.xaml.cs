@@ -24,7 +24,6 @@ namespace UI.View.Components
     /// </summary>
     public partial class AddUser : UserControl
     {
-        public event Action<User> UserCreated;
         public AddUser()
         {
             InitializeComponent();
@@ -32,9 +31,9 @@ namespace UI.View.Components
 
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
-            var usersPresenter = DataContext as UsersPresenter;
+            var addUserVM = DataContext as AddUserViewModel;
 
-            usersPresenter?.AddUserCommand.Execute(null);
+            addUserVM?.AddUserCommand.Execute(null);
         }
     }
 }
