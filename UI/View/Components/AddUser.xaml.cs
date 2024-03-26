@@ -28,12 +28,5 @@ namespace UI.View.Components
         {
             InitializeComponent();
         }
-
-        private void AddUser_Click(object sender, RoutedEventArgs e)
-        {
-            var addUserVM = DataContext as AddUserViewModel;
-
-            addUserVM?.AddUserCommand.Execute(null);
-        }
     }
 }

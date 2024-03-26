@@ -28,6 +28,5 @@ namespace UI.Components
         {
             InitializeComponent();
         }
-
     }
 }

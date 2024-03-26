@@ -37,7 +37,7 @@
                       SelectedValue="{Binding Role, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                       Margin="0,0,0,10" SelectedIndex="0" />
 
-            <Button Content="Add User" Click="AddUser_Click"/>
+            <Button Content="Add User" Command="{Binding AddUserCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>
