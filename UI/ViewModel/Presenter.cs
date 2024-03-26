@@ -61,17 +61,18 @@ namespace UI.ViewModel
         private void LoadUsers()
         {
             using var context = new DatabaseContext();
-            var records = context.Users.Include(s => s.DatabaseSubjects).ToList();
+            var records = DatabaseService.GetAllUsers();
             foreach (var user in records)
             {
                 Users.Add(user);
             }
         }
+
         private void ReLoadUsers()
         {
             Users.Clear();
             using var context = new DatabaseContext();
-            var records = context.Users.Include(s => s.DatabaseSubjects).ToList();
+            var records = DatabaseService.GetAllUsers();
             foreach (var user in records)
             {
                 Users.Add(user);
@@ -81,7 +82,7 @@ namespace UI.ViewModel
         private void LoadLogger()
         {
             using var context = new DatabaseContext();
-            var records = context.DatabaseLogger.ToList();
+            var records = DatabaseService.GetAllLogs();
             foreach (var log in records)
             {
                 Logger.Add(log);

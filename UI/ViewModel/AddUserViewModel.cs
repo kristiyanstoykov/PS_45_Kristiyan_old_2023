@@ -145,12 +145,7 @@ namespace UI.ViewModel
 
                     AddLog("INFO", $"User {FullName} added successfully.");
 
-                    using (var context = new DatabaseContext())
-                    {
-                        context.Add(FormUser);
-
-                        context.SaveChanges();
-                    }
+                    DatabaseService.Add(FormUser);
 
                     MessageBox.Show($"User {FormUser.Name} successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -180,11 +175,7 @@ namespace UI.ViewModel
 
             Logger.Add(logger);
 
-            using (var context = new DatabaseContext())
-            {
-                context.Add(logger);
-                context.SaveChanges();
-            };
+            DatabaseService.Add(logger);
         }
     }
 }
