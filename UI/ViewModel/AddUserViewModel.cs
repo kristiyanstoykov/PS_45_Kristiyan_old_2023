@@ -4,11 +4,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using Welcome.Others;
 
@@ -16,6 +18,7 @@ namespace UI.ViewModel
 {
     public class AddUserViewModel : ObservableObject
     {
+
         private string _fullName;
         private string _password;
         private string _facultyNumber;
@@ -149,13 +152,13 @@ namespace UI.ViewModel
                         context.SaveChanges();
                     }
 
+                    MessageBox.Show($"User {FormUser.Name} successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
                     FullName = String.Empty;
                     Password = String.Empty;
                     FacultyNumber = String.Empty;
                     Email = String.Empty;
-                    Role = UserRolesEnum.ANONYMOUS;
-
-                    MessageBox.Show($"User {FormUser.Name} successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Role = UserRolesEnum.ANONYMOUS; 
                 }
                 catch (Exception ex)
                 {
