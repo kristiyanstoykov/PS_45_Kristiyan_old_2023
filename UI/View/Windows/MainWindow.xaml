@@ -11,8 +11,8 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="300" />
-                <RowDefinition Height="300" />
+                <RowDefinition Height="500" />
+                <RowDefinition Height="200" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
