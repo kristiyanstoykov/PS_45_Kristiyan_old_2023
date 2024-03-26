@@ -118,8 +118,6 @@ namespace UI.ViewModel
 
         private void AddUser()
         {
-            DatabaseLogger logger;
-
             if (Users.Any(u => u.Name.Equals(FullName, StringComparison.OrdinalIgnoreCase)))
             {
                 MessageBox.Show("A user with the same name already exists.", "Error Adding User", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -141,13 +139,6 @@ namespace UI.ViewModel
                     };
 
                     Users.Add(FormUser);
-
-                    logger = new DatabaseLogger()
-                    {
-                        TimeStamp = DateTime.Now,
-                        Level = "INFO",
-                        Message = $"User {FullName} added successfully."
-                    };
 
                     AddLog("INFO", $"User {FullName} added successfully.");
 
