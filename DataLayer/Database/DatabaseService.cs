@@ -12,7 +12,7 @@ namespace DataLayer.Database
 {
     public static class DatabaseService
     {
-        public static List<T> GetAll<T>() where T : class
+        private static List<T> GetAll<T>() where T : class
         {
             using (var context = new DatabaseContext())
             {

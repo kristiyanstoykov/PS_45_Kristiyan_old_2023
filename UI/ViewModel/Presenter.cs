@@ -60,7 +60,6 @@ namespace UI.ViewModel
 
         private void LoadUsers()
         {
-            using var context = new DatabaseContext();
             var records = DatabaseService.GetAllUsers();
             foreach (var user in records)
             {
@@ -71,7 +70,6 @@ namespace UI.ViewModel
         private void ReLoadUsers()
         {
             Users.Clear();
-            using var context = new DatabaseContext();
             var records = DatabaseService.GetAllUsers();
             foreach (var user in records)
             {
@@ -81,7 +79,6 @@ namespace UI.ViewModel
 
         private void LoadLogger()
         {
-            using var context = new DatabaseContext();
             var records = DatabaseService.GetAllLogs();
             foreach (var log in records)
             {
